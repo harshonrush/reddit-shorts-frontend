@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Navbar from "../components/Navbar";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://your-railway-url.com";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://reddit-shorts-backend-production.up.railway.app";
 
 type Step = 1 | 2 | 3 | 4;
 
