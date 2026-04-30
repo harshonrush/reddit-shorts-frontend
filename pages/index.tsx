@@ -309,10 +309,9 @@ export default function Home() {
               {/* Video Player */}
               <div className="bg-zinc-900 rounded-lg overflow-hidden">
                 <video
-                  src={`${API_URL}${videoUrl}`}
+                  src={videoUrl}
                   controls
                   className="w-full aspect-[9/16] bg-black"
-                  poster="/video-placeholder.png"
                 />
               </div>
 
@@ -325,7 +324,7 @@ export default function Home() {
               {/* Actions */}
               <div className="flex gap-3">
                 <a
-                  href={`${API_URL}${videoUrl}`}
+                  href={videoUrl}
                   download
                   className="flex-1 py-3 px-6 bg-zinc-800 hover:bg-zinc-700 text-white font-medium rounded-lg transition-colors text-center"
                 >
