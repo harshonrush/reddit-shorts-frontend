@@ -35,19 +35,28 @@ export default function Home() {
     setError(null);
 
     try {
+      console.log("[FRONTEND] Calling /generate-script...");
       const res = await fetch(`${API_URL}/generate-script`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ idea }),
       });
 
-      if (!res.ok) throw new Error("Failed to generate script");
+      console.log("[FRONTEND] Response status:", res.status);
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error("[FRONTEND] Error response:", errorText);
+        throw new Error(`HTTP ${res.status}: ${errorText}`);
+      }
 
       const data = await res.json();
+      console.log("[FRONTEND] Got script_id:", data.script_id);
       setScript(data.script);
       setScriptId(data.script_id);
       setStep(2);
     } catch (err: any) {
+      console.error("[FRONTEND] Error:", err);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -85,20 +94,29 @@ export default function Home() {
     setError(null);
 
     try {
+      console.log("[FRONTEND] Calling /generate-video...");
       const res = await fetch(`${API_URL}/generate-video`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ script }),
       });
 
-      if (!res.ok) throw new Error("Failed to start video generation");
+      console.log("[FRONTEND] Response status:", res.status);
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error("[FRONTEND] Error response:", errorText);
+        throw new Error(`HTTP ${res.status}: ${errorText}`);
+      }
 
       const data = await res.json();
+      console.log("[FRONTEND] Got job_id:", data.job_id);
       setJobId(data.job_id);
       setJobStatus("queued");
       setProgress(10);
       setStep(3);
     } catch (err: any) {
+      console.error("[FRONTEND] Error:", err);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -110,10 +128,17 @@ export default function Home() {
     if (!jobId || step !== 3) return;
 
     try {
+      console.log(`[FRONTEND] Polling /job-status/${jobId}...`);
       const res = await fetch(`${API_URL}/job-status/${jobId}`);
-      if (!res.ok) throw new Error("Failed to check status");
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error("[FRONTEND] Status check failed:", errorText);
+        return;
+      }
 
       const data = await res.json();
+      console.log("[FRONTEND] Job status:", data.status);
       setJobStatus(data.status);
 
       // Update progress based on status
@@ -128,7 +153,7 @@ export default function Home() {
         setStep(2); // Go back to script editing
       }
     } catch (err: any) {
-      console.error("Polling error:", err);
+      console.error("[FRONTEND] Polling error:", err);
     }
   }, [jobId, step]);
 
