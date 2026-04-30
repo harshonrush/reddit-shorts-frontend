@@ -137,7 +137,16 @@ export default function Home() {
         return;
       }
 
-      const data = await res.json();
+      let data;
+      try {
+        data = await res.json();
+      } catch (jsonErr) {
+        const text = await res.text();
+        console.error("[FRONTEND] Invalid JSON response:", text);
+        setError("Server returned invalid data");
+        return;
+      }
+
       console.log("[FRONTEND] Job status:", data.status);
       setJobStatus(data.status);
 
