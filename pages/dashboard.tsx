@@ -125,7 +125,7 @@ export default function Dashboard() {
         const s = seriesData.settings || {};
         setNiche(s.niche || "facts");
         setContentMode(s.content_mode || "auto");
-        setCustomTopic(s.custom_topic || "");
+        setCustomTopic(s.topic || "");
         setVideoStyle(s.video_style || "gameplay");
         setVoice(s.voice || "male_deep");
         setLanguage(s.language || "english");
@@ -188,7 +188,7 @@ export default function Dashboard() {
           enabled: autoPostEnabled,
           niche,
           content_mode: contentMode,
-          custom_topic: contentMode === "custom" ? customTopic : null,
+          topic: contentMode === "custom" ? customTopic : null,
           video_style: videoStyle,
           voice,
           language,
