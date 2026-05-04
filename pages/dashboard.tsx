@@ -37,8 +37,7 @@ const VOICES = [
 // Languages
 const LANGUAGES = [
   { value: "english", label: "English", flag: "🇺🇸" },
-  { value: "hindi", label: "Hindi", flag: "🇮🇳" },
-  { value: "hinglish", label: "Hinglish", flag: "🇮🇳" },
+  { value: "hindi", label: "Hindi", flag: "🇮🇳" }
 ];
 
 // Durations
