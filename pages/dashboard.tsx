@@ -78,6 +78,7 @@ export default function Dashboard() {
   
   // Step 3: Video Style
   const [videoStyle, setVideoStyle] = useState("gameplay");
+  const [enableImages, setEnableImages] = useState(false);
   
   // Step 4: Voice Selection
   const [voice, setVoice] = useState("male_deep");
@@ -164,7 +165,8 @@ export default function Dashboard() {
           niche,
           topic: contentMode === "custom" ? customTopic : null,
           voice,
-          language
+          language,
+          enable_images: enableImages
         })
       });
       const data = await res.json();
@@ -193,7 +195,8 @@ export default function Dashboard() {
           language,
           duration,
           post_time: postTime,
-          frequency
+          frequency,
+          enable_images: enableImages
         })
       });
       const data = await res.json();
@@ -416,6 +419,29 @@ export default function Dashboard() {
                     <div className="text-zinc-400 text-sm">{style.desc}</div>
                   </button>
                 ))}
+              </div>
+
+              <div className="mt-6 bg-zinc-800 border border-zinc-700 rounded-2xl p-5">
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <h3 className="text-lg font-semibold text-white">🖼️ AI Images</h3>
+                    <p className="text-zinc-400 text-sm">
+                      Enable Gemini + Pexels image backgrounds for a more cinematic short.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setEnableImages((prev) => !prev)}
+                    className={`w-20 h-10 rounded-full transition ${
+                      enableImages ? "bg-green-500 justify-end" : "bg-zinc-700 justify-start"
+                    } flex items-center p-1`}
+                  >
+                    <span className="w-8 h-8 bg-white rounded-full shadow" />
+                  </button>
+                </div>
+                <p className="mt-3 text-xs text-zinc-500">
+                  This option will request image generation and Pexels search on the backend.
+                </p>
               </div>
 
               <div className="flex justify-between mt-6">
